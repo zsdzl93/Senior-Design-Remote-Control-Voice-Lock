@@ -42,8 +42,7 @@ void setup()
     if (sms.SendSMS("3127313868", "Arduino SMS"))
       Serial.println("\nSMS sent OK");
   }
-
-};
+}
 
 void loop() 
 {
@@ -58,4 +57,4 @@ void loop()
     }
     delay(1000);
   }
-};
+}
