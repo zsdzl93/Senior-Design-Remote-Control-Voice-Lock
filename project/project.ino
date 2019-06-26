@@ -46,7 +46,7 @@ void setup()
 {
   //LCD
   lcd.begin(16, 2);
-  //GSM 通讯
+  //GSM communication
   Serial.begin(9600);  
 //  pinMode(13,OUTPUT);
   
@@ -89,7 +89,7 @@ bridge:
   }
 
 
-//定义需要用到的引脚
+// Define the pins that will be used
 //  pinMode(11, OUTPUT); //set pin 8 as output for LED
 //  digitalWrite(11, LOW); //switch off LED
   
@@ -139,7 +139,7 @@ bridge:
   digitalWrite(11,HIGH);
   digitalWrite(3,HIGH);
 
-  easyvr.setMicDistance(EasyVR::HEADSET);   //麦克风距离
+  easyvr.setMicDistance(EasyVR::HEADSET);   //mic distance
   easyvr.setLevel(EasyVR::NORMAL);          //strictness level for recognition of custom commands
   easyvr.setKnob(EasyVR::TYPICAL);          //Sets the confidence threshold to use for recognition of built-in words or custom grammars
   easyvr.playSound(SND_Hello, EasyVR::VOL_DOUBLE);
@@ -167,7 +167,7 @@ void loop()
   while (!easyvr.hasFinished()); // wait for trigger
 
   idx_cmd = easyvr.getWord(); // get recognised command
-  if ((idx_cmd == WS4_HELLO_DEVICE) && (lock == 0))  //系统未上锁时
+  if ((idx_cmd == WS4_HELLO_DEVICE) && (lock == 0))  // When the system is unlocked
   {
     if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
       {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
@@ -213,20 +213,20 @@ void loop()
       for( m=0;m<4;m++ )
       {
         Serial.print("Wait for password ");
-        Serial.println(m+1);     //显示在等待密码的第几位
+        Serial.println(m+1);     // Display which position of the password that we are waiting
 //        Serial.print(" : ");
         if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
         {easyvr.setPinOutput(EasyVR::IO1, HIGH); // LED on (listening)
          digitalWrite(11, LOW);}
         easyvr.recognizeWord(3); // Wordset 3, recognise grammar number 3 (custom SI trigger word must be here!)
         while (!easyvr.hasFinished());
-        easyvr.playSound(EasyVR::BEEP, EasyVR::VOL_DOUBLE);   //每次识别一位结束，beep一声
+        easyvr.playSound(EasyVR::BEEP, EasyVR::VOL_DOUBLE);   // Everytime done recognizing, beep 1 time.
         if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
         {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
          digitalWrite(11, HIGH);}
 
         Serial.println(easyvr.getWord());
-        d[m] = easyvr.getWord();    //将识别到的数字逐一存到数组d
+        d[m] = easyvr.getWord();    // Store the identified numbers one by one to the array d
         lcd.setCursor(m+1, 1);
         n=d[m];
         lcd.print(n);
@@ -386,7 +386,7 @@ void GSM_loop()
         pwd=comdata.toInt();
         Serial.println(pwd);
         STATE=!STATE;  
-//        digitalWrite(13,STATE);    //通过电平反转可直观看出程序的运行。  
+//        digitalWrite(13,STATE);    // The level flip can be used to visualize the operation of the program.
         comdata = "";  
     }
 //    char pwd[4];
