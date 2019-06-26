@@ -143,8 +143,6 @@ bridge:
   easyvr.setLevel(EasyVR::NORMAL);          //strictness level for recognition of custom commands
   easyvr.setKnob(EasyVR::TYPICAL);          //Sets the confidence threshold to use for recognition of built-in words or custom grammars
   easyvr.playSound(SND_Hello, EasyVR::VOL_DOUBLE);
-
-
 }
 
 void loop()
@@ -170,13 +168,17 @@ void loop()
   if ((idx_cmd == WS4_HELLO_DEVICE) && (lock == 0))  // When the system is unlocked
   {
     if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-      {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
-       digitalWrite(11, HIGH);}
+    {
+      easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
+      digitalWrite(11, HIGH);
+    }
 
     easyvr.playSound(SND_Hello_give_command , EasyVR::VOL_DOUBLE);  // ask for a command
     if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-      {easyvr.setPinOutput(EasyVR::IO1, HIGH); // LED on (listening)
-       digitalWrite(11, LOW);}
+    {
+      easyvr.setPinOutput(EasyVR::IO1, HIGH); // LED on (listening)
+      digitalWrite(11, LOW);
+    }
 
     Serial.println("Wait for commmand");
     lcd.begin(16, 2);
@@ -185,8 +187,10 @@ void loop()
     while (!easyvr.hasFinished()); // wait for command
 
     if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-      {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
-       digitalWrite(11, HIGH);}
+    {
+      easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
+      digitalWrite(11, HIGH);
+    }
 
     idx_cmd = easyvr.getWord(); // get recognised command
   }
@@ -195,14 +199,18 @@ void loop()
   if ((lock == 1) && (idx_cmd == WS4_HELLO_DEVICE)) // system locked, ask for password!
   {
     if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-      {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
-       digitalWrite(11, HIGH);}
+    {
+      easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
+      digitalWrite(11, HIGH);
+    }
        
       easyvr.playSound(SND_Please_say_your_password , EasyVR::VOL_DOUBLE);  // ask for password
 
       if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-      {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
-       digitalWrite(11, LOW);}
+      {
+        easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
+        digitalWrite(11, LOW);
+      }
        
       lcd.begin(16, 2);
 //      lcd.setCursor(1, 1);
@@ -216,15 +224,19 @@ void loop()
         Serial.println(m+1);     // Display which position of the password that we are waiting
 //        Serial.print(" : ");
         if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-        {easyvr.setPinOutput(EasyVR::IO1, HIGH); // LED on (listening)
-         digitalWrite(11, LOW);}
+        {
+          easyvr.setPinOutput(EasyVR::IO1, HIGH); // LED on (listening)
+          digitalWrite(11, LOW);
+        }
         easyvr.recognizeWord(3); // Wordset 3, recognise grammar number 3 (custom SI trigger word must be here!)
         while (!easyvr.hasFinished());
         easyvr.playSound(EasyVR::BEEP, EasyVR::VOL_DOUBLE);   // Everytime done recognizing, beep 1 time.
         if (easyvr.getID() == EasyVR::EASYVR3) // checking EasyVR version to manage green LED connected to IO1 on older EasyVR
-        {easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
-         digitalWrite(11, HIGH);}
-
+        {
+          easyvr.setPinOutput(EasyVR::IO1, LOW); // LED off
+          digitalWrite(11, HIGH);
+        }
+        
         Serial.println(easyvr.getWord());
         d[m] = easyvr.getWord();    // Store the identified numbers one by one to the array d
         lcd.setCursor(m+1, 1);
